@@ -1,6 +1,5 @@
-const recurso = 'user';
-const servico = 'new';
-const url = 'https://todolist-api.edsonmelo.com.br/api/${recurso}/${servico}/';
+function cadastrar() {
+const url = 'https://todolist-api.edsonmelo.com.br/api/user/new/';
 
 const nome = document.getElementById('nomecad').value
 const email = document.getElementById('emailcad').value
@@ -32,3 +31,4 @@ fetch(url, {
         }
     })
     .catch(error => console.log(error));
+}

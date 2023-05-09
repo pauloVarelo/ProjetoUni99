@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pagina do acesso</title>
     <link rel="stylesheet" href="css/acesso.css">
-    <script src="acesso.js"></script>
+    <script src="js/editar.js"></script>
 </head>
 <body>
 
@@ -15,17 +15,19 @@
         <div id="container-login">
             <h1>Editar Dados</h1>
             <form id="logincad">
+                <label for="nomecad">Nome</label>
+                <input type="text" name="nomecad" id="nomecad" placeholder="Digite o nome" required>
                 <label for="emailcad">Email</label>
                 <input type="text" name="emailcad" id="emailcad" placeholder="Digite o email" required>
                 <label for="nomescad">Usuário</label>
-                <input type="text" name="nomescad" id="nomescad" placeholder="Digite o nome" required>
+                <input type="text" name="nomescad" id="nomescad" placeholder="Digite o nome de Usuário" required>
                 <label for="senhacad">Senha</label>
                 <input type="password" name="senhacad" id="senhacad" placeholder="Digite a senha" required>
-    
-    
+               
+                
             </form>
     
-            <button onclick="cadastrar()" type="submit" value="enviar-cadastro" id="btn-logincad">
+            <button onclick="editar()" type="submit" value="enviar-cadastro" id="btn-logincad">
                 <span></span>
                 <span></span>
                 <span></span>
