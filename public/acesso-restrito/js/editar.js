@@ -1,3 +1,12 @@
+const token = localStorage.getItem('token');
+const nomeg = localStorage.getItem('nameg');
+const emailg = localStorage.getItem('emailg');
+const usernameg = localStorage.getItem('usernameg');
+const passwordg = localStorage.getItem('passwordg');
+localStorage.getElementById()
+
+
+
 function editar() {
     const url = "https://todolist-api.edsonmelo.com.br/api/user/update/";
 
@@ -34,7 +43,7 @@ function editar() {
         })
         .catch(error => console.log(error));
     {
-        "content-type"= "application/json",
-            "Authorization"= "YOUR_TOKEN"
+        "content-type" = "application/json",
+            "Authorization" = "YOUR_TOKEN"
     }
 }

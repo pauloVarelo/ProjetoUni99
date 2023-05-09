@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/acesso.css">
     <script src="js/editar.js"></script>
 </head>
-<body>
+<body onload="carregara()">
 
     <header>
 
@@ -42,4 +42,25 @@
     </header>
     
 </body>
+
+<script>
+    
+function carregara() {
+let token = localStorage.getItem('token');
+let nomeg = localStorage.getItem('nameg');
+let emailg = localStorage.getItem('emailg');
+let usernameg = localStorage.getItem('usernameg');
+let passwordg = localStorage.getItem('passwordg');
+
+let nome = document.getElementById('nomecad')
+let email = document.getElementById('emailcad')
+let username = document.getElementById('nomescad')
+let password = document.getElementById('senhacad')
+
+nome.value = nomeg;
+email.value = emailg;
+username.value = usernameg;
+password.value = passwordg;
+}
+</script>
 </html>

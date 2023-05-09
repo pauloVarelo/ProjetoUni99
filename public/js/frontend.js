@@ -22,8 +22,12 @@ function logar() {
             throw new Error(data['message']);
         } else {
             console.log("Login concluído");
-            console.log('Token: ', data['token']);
-            
+           
+            localStorage.setItem('token', data['token']);
+            localStorage.setItem('nameg', data['name']);
+            localStorage.setItem('emailg', data['email']);
+            localStorage.setItem('usernameg', data['username']);
+            localStorage.setItem('passwordg', data['password']);
             window.location.href = 'acesso-restrito/task.html'
             
         }
