@@ -1,9 +1,8 @@
-const token = localStorage.getItem('token');
-const nomeg = localStorage.getItem('nameg');
-const emailg = localStorage.getItem('emailg');
-const usernameg = localStorage.getItem('usernameg');
-const passwordg = localStorage.getItem('passwordg');
-localStorage.getElementById()
+let token = localStorage.getItem("token");
+let nomeg = localStorage.getItem("nameg");
+let emailg = localStorage.getItem("emailg");
+let usernameg = localStorage.getItem("usernameg");
+let passwordg = localStorage.getItem("passwordg");
 
 
 

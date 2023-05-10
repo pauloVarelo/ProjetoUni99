@@ -26,8 +26,8 @@ function logar() {
             localStorage.setItem('token', data['token']);
             localStorage.setItem('nameg', data['name']);
             localStorage.setItem('emailg', data['email']);
-            localStorage.setItem('usernameg', data['username']);
-            localStorage.setItem('passwordg', data['password']);
+            localStorage.setItem('usernameg', nomes);
+            localStorage.setItem('passwordg', senha);
             window.location.href = 'acesso-restrito/task.html'
             
         }

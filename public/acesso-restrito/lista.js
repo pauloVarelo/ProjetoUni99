@@ -1,10 +1,56 @@
-       let input = document.getElementById("inputText");
-        let list = document.getElementById("list");
-        let minimalValue = 3;
-        let listNum = 0;
+    let input = document.getElementById("inputText");
+    let list = document.getElementById("list");
+    let minimalValue = 3;
+    let listNum = 0;
+    let token = localStorage.getItem("token");
+    
 
-        let tasks = [];
+    let tasks = [];
 
+    function carregarLista(){
+        const url = 'https://todolist-api.edsonmelo.com.br/api/task/search/';
+
+        const headers = { 'Content-type': 'application/json', 'Authorization': token };
+
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: null
+            }).then(response => {
+            // Aqui devem ser realizados os tratamentos no caso de ocorrerem erros
+            response.json().then(data => {
+            if ('message' in data) {
+            // Gera uma mensagem de erro com o valor retornado pela API ou conexão
+            throw new Error(data.message);
+            } else {
+            // Mostra os dados retornados já convertidos
+            for (let i = 0; i < data.length; i++) {
+            console.log(data[i].name);
+            list.innerHTML += ` <li class=" my-3 py-3 list-group-item " id="list${data[i].id}">
+                    <div class="row">
+                    <div class="col-1">
+                    <input class="" type="checkbox" id="check${listNum}" onclick="done(${data[i].name})">
+                    </div>
+                    <div class="col-6">
+                        <span class=" h5" id="text${data[i].id}"> ${data[i].name} </span>
+                    </div>
+                    <div class="col-4">
+                        <i class=" fa fa-trash" style="cursor:pointer;" onclick="deleteList(${data[i].id})"></i>
+                        <i class=" fa fa-thin fa-pencil" style="cursor:pointer;" onclick="editList(${data[i].id, data[i].name, data[i].realized})"></i>
+                    </div>                  
+                    </div>    
+                    </li> `;
+                input.value = " ";
+
+
+        }}}).catch(error => {
+            console.log(error);
+            });
+            }).catch(error => {
+            console.log(error);
+            });
+        }
+            
         /*Adicionar Tarefa a Lista de Tarefas*/
         addList = () => {
             // get
@@ -17,21 +63,8 @@
                     done: false
                 };
                 tasks.push(task);
-                list.innerHTML += ` <li class=" my-3 py-3 list-group-item " id="list${listNum}">
-                    <div class="row">
-                    <div class="col-1">
-                    <input class="" type="checkbox" id="check${listNum}" onclick="done(${listNum})">
-                    </div>
-                    <div class="col-6">
-                        <span class=" h5" id="text${listNum}"> ${inputText} </span>
-                    </div>
-                    <div class="col-4">
-                        <i class=" fa fa-trash" style="cursor:pointer;" onclick="deleteList(${listNum})"></i>
-                        <i class=" fa fa-thin fa-pencil" style="cursor:pointer;" onclick="editList(${listNum})"></i>
-                    </div>                  
-                    </div>    
-                    </li> `;
-                input.value = " ";
+                
+                carregarLista();
                 listNum++;
                 
 
@@ -64,13 +97,54 @@
             }
         }
         /*Alerta de Edição de Tarefa*/
-        editList = (listId) => {
-            let currentText = document.getElementById(`text${listId}`);
-            let newText = prompt("Deseja alterar o nome da Tarefa?", currentText.innerHTML);
-            if (filterList(newText)) {
-                currentText.innerHTML = newText;
-            }
-        }
+            editList = (listId,listName,listDone) => {
+                        let currentText = document.getElementById(`text${listId}`);
+                        let newText = prompt("Deseja alterar o nome da Tarefa?", currentText.innerHTML);
+                        const pay_load = {
+                            'id': listId,
+                            'name': listName,
+                            'realized': listDone,
+                          };
+
+                        if (filterList(newText)) {
+                          fetch('https://todolist-api.edsonmelo.com.br/api/task/update/', {
+                            method: 'PUT',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              'Authorization': token
+                            },
+                            body: JSON.stringify(pay_load),
+                          })
+                          .then(response => {
+                            // Aqui devem ser realizados os tratamentos no caso de ocorrerem erros
+                            response.json().then(data => {
+                              if ('message' in data) {
+                                // Gera uma mensagem de erro com o valor retornado pela API ou conexão
+                                throw new Error(data.message);
+                              } else {
+                                // Mostra os dados retornados já convertidos
+                                console.log(data);
+                          
+                                // Mostra os dados de forma isolada para cada variável recebida na requisição
+                                console.log('Id: ', data.id);
+                                console.log('UserID: ', data.userId);
+                                console.log('Name: ', data.name);
+                                console.log('Date: ', data.date);
+                                console.log('Realized: ', data.realized);
+                              }
+                            }).catch(error => {
+                              console.log(error);
+                            });
+                          }).catch(error => {
+                            console.log(error);
+                          });
+                        }
+                    }
+                          
+                          
+                          
+                          
+                          
         /*Alerta de Exclusão de Tarefa*/
         deleteList = (listId) => {
             let current = document.getElementById(`text${listId}`).innerHTML;
@@ -86,6 +160,13 @@
         };
 
 
+        function logout(){
+
+            localStorage.clear();
+            window.location.href = '../index.html'
+            
+            }
+            
 
 
     //    let input = document.getElementById("inputText");
