@@ -41,7 +41,7 @@
                     </div>    
                     </li> `;
                 input.value = " ";
-
+            // console.log(data[i].id, data[i].name, data[i]);
 
         }}}).catch(error => {
             console.log(error);
@@ -53,23 +53,56 @@
             
         /*Adicionar Tarefa a Lista de Tarefas*/
         addList = () => {
-            // get
+            let listNum = 0;
+            const url = 'https://todolist-api.edsonmelo.com.br/api/task/new/';
+            const headers = { 'Content-type': 'application/json', 'Authorization': token };
+        
+            // obter o valor do input e filtrar o texto
             let inputText = filterList(input.value);
-            // set 
+            // verificar se o texto filtrado é válido
             if (inputText) {
-                let task = {
-                    id: listNum,
+                let newTask = {
                     name: inputText,
-                    done: false
                 };
-                tasks.push(task);
-                
-                carregarLista();
-                listNum++;
-                
-
+        
+                // Converter o objeto em JSON
+                const payload = JSON.stringify(newTask);
+        
+                fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: payload
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Adicionar a nova tarefa na lista de tarefas
+                    newTask.id = data.id;
+                    tasks.push(newTask);
+                    // atualizar a lista de tarefas na interface
+                    list.innerHTML += ` <li class=" my-3 py-3 list-group-item " id="list${newTask.id}">
+                        <div class="row">
+                        <div class="col-1">
+                        <input class="" type="checkbox" id="check${newTask.id}" onclick="done(${newTask.id})">
+                        </div>
+                        <div class="col-6">
+                            <span class=" h5" id="text${newTask.id}"> ${newTask.name} </span>
+                        </div>
+                        <div class="col-4">
+                            <i class=" fa fa-trash" style="cursor:pointer;" onclick="deleteList(${newTask.id})"></i>
+                            <i class=" fa fa-thin fa-pencil" style="cursor:pointer;" onclick="editList(${newTask.id},'${newTask.name}',${newTask.realized})"></i>
+                        </div>                  
+                        </div>    
+                        </li> `;
+                    
+                    // limpar o input e atualizar o número de tarefas
+                    console.log(newTask);
+                    input.value = "";
+                    listNum++;
+                })
+                .catch(error => console.error(error));
             }
-        }
+        };
+        
         /* Verificar se o item foi concluído */
         done = (listId) => {
             let checkbox = document.getElementById(`check${listId}`);
